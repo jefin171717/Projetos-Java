@@ -2,6 +2,11 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandler;
+import java.net.http.HttpResponse.BodyHandlers;
+import java.security.Key;
+import java.util.List;
+import java.util.Map;
 
 
 
@@ -9,20 +14,30 @@ import java.net.http.HttpResponse;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
-
-
-        // Acessar a url
-
-        var url = "https://imdb-api.com/en/API/Top250Movies/k_ii5mdgg8";
-        URI uri = URI.create(url);
-        var client = HttpClient.newHttpClient();
-        var request = HttpRequest.newBuilder(uri).build();
         
-        //Pegar o texto JSON
-        String json = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
-        //Imprimir o JSON
-        System.out.println(json);
+
+        // Fazer uma conexão HTTP e buscar os top 250 filmes
+        String url = "https://imdb-api.com/en/API/Top250Movies/k_2zpvk3ep";
+        URI endereço = URI.create(url);
+        var client = HttpClient.newHttpClient();
+        var request = HttpRequest.newBuilder(endereço).GET().build();
+        HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
+        String body = response.body();
+        System.out.println(body);
+
+        // extrair só os dados que interessa (titulo , poster , classificação)
+        var parser = new JsonParser();
+        List<Map<String, String>> ListaDeFilmes = parser.parse(body);
+        
+
+        // exibir e manipular os dados
+        for(Map<String, String> filme : ListaDeFilmes){
+        
+            System.out.println(filme.get("title"));
+            System.out.println(filme.get("image"));
+            System.out.println(filme.get("imDbRating"));  
+            System.out.println();
+        }
         
     }
 }
