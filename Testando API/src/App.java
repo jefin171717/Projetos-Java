@@ -36,6 +36,9 @@ public class App {
             System.out.println(filme.get("title"));
             System.out.println(filme.get("image"));
             System.out.println(filme.get("imDbRating"));  
+            if(Float.parseFloat(filme.get("imDbRating")) < 9){
+                System.out.println("****");
+            }
             System.out.println();
         }
         
