@@ -2,17 +2,17 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import java.io.File;
-
+import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
 public class GeradoraDeFigurinhas {
     
 
-    public void cria() throws Exception{
+    public void cria() throws IOException{
 
         // leitura da imagen
-        BufferedImage imagemOriginal = ImageIO.read(new File("../entrada/filme.jpg"));
+        BufferedImage imagemOriginal = ImageIO.read(getClass().getResource("filme.jpg"));
         //criar nova imagem em memoria com transparencia e com tamanho novo
         int largura = imagemOriginal.getWidth();
         int altura = imagemOriginal.getHeight();
@@ -26,7 +26,7 @@ public class GeradoraDeFigurinhas {
         // escrever uma frase na nova imagem
 
         //escrever a nova imagem em um arquivo
-        ImageIO.write( novaImagem, "png", new File("saida/figurinha.png"));
+        ImageIO.write( novaImagem, "png", new File("figurinha.png"));
 
     }
     public static void main(String[] args) throws Exception {
